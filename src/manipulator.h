@@ -9,4 +9,5 @@ public:
   void Finish();
 private:
 std::map<const char*, Model> model;
+float scale;
 };
