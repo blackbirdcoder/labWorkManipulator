@@ -3,6 +3,7 @@
 #include "settings.h"
 #include <raylib.h>
 #include "camera.h"
+#include "ui.h"
 // clang-format on
 
 int main(void) {
@@ -10,10 +11,11 @@ int main(void) {
   SetTargetFPS(FPS);
   PresentationCamera preCamera = PresentationCamera();
   Manipulator manipulator = Manipulator();
+  GUI gui = GUI();
 
   while (!WindowShouldClose()) {
     //--- Update
-    preCamera.Run(CAMERA_FREE);
+    preCamera.Run();
     //---
 
     //--- Draw
@@ -24,6 +26,10 @@ int main(void) {
     manipulator.Exploitation();
     DrawGrid(10, 0.5f);
     EndMode3D();
+    //---GUI
+    gui.StateSwitchButton(((float)GetScreenWidth() - 130), &preCamera.state,
+                          preCamera.GetTitle());
+    //---
     EndDrawing();
     //---
   }
