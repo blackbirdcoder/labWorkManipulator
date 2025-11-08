@@ -21,7 +21,6 @@ int main(void) {
     //--- Draw
     BeginDrawing();
     ClearBackground(palette.background);
-    DrawText("Manipulator", 10, 10, 30, palette.ui);
     BeginMode3D(preCamera.Get());
     manipulator.Exploitation();
     DrawGrid(10, 0.5f);
