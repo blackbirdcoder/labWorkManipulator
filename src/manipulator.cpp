@@ -12,6 +12,7 @@ Manipulator::Manipulator() {
   model["forearm"] = LoadModelFromMesh(GenMeshCube(1.0f, 0.3f, 0.35f));
 
   capability["forearm"]["z"] = {0.0f, -20.0f, 20.0f};
+  capability["forearm"]["x"] = {0.0f, 0.0f, 90.0f};
 }
 
 void Manipulator::Exploitation() {
@@ -23,9 +24,11 @@ void Manipulator::Exploitation() {
             palette.basic);
 }
 
-void Manipulator::ForearmMoveZ() {
-  model["forearm"].transform =
-      MatrixRotateZ(DEG2RAD * capability["forearm"]["z"][BASE]);
+void Manipulator::ForearmMove() {
+  float z = DEG2RAD * capability["forearm"]["z"][BASE];
+  float x = DEG2RAD * capability["forearm"]["x"][BASE];
+
+  model["forearm"].transform = MatrixRotateXYZ((Vector3){0.0f, x, z});
 }
 
 float *Manipulator::GetPtrCapabilityValue(const char *type, const char *param,

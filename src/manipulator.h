@@ -9,7 +9,7 @@ public:
   enum Capability { BASE, MIN, MAX };
   void Exploitation();
   void Finish();
-  void ForearmMoveZ();
+  void ForearmMove();
   float *GetPtrCapabilityValue(const char *, const char *, Capability);
 
 private:
