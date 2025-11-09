@@ -36,7 +36,13 @@ int main(void) {
         *manipulator.GetPtrCapabilityValue("forearm", "z", manipulator.MAX));
 
     gui.ControlRange(
-        45.0f, "Forearm X:",
+        45.0f, "Forearm Y:",
+        manipulator.GetPtrCapabilityValue("forearm", "y", manipulator.BASE),
+        *manipulator.GetPtrCapabilityValue("forearm", "y", manipulator.MIN),
+        *manipulator.GetPtrCapabilityValue("forearm", "y", manipulator.MAX));
+
+    gui.ControlRange(
+        70.0f, "Forearm X:",
         manipulator.GetPtrCapabilityValue("forearm", "x", manipulator.BASE),
         *manipulator.GetPtrCapabilityValue("forearm", "x", manipulator.MIN),
         *manipulator.GetPtrCapabilityValue("forearm", "x", manipulator.MAX));
