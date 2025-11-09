@@ -5,10 +5,13 @@
 
 Manipulator::Manipulator() {
   scale = 1.0f;
+
   model["basis"] = LoadModelFromMesh(GenMeshCube(1.0f, 0.3f, 1.0f));
   model["sleeve"] = LoadModelFromMesh(GenMeshCylinder(0.3f, 0.2f, 12));
   model["joint"] = LoadModelFromMesh(GenMeshSphere(0.25f, 12, 12));
   model["forearm"] = LoadModelFromMesh(GenMeshCube(1.0f, 0.3f, 0.35f));
+
+  capability["forearm"]["z"] = {0.0f, -20.0f, 20.0f};
 }
 
 void Manipulator::Exploitation() {
@@ -18,6 +21,16 @@ void Manipulator::Exploitation() {
   DrawModel(model["joint"], (Vector3){0.0f, 0.3f, 0.0f}, scale, palette.chunk);
   DrawModel(model["forearm"], (Vector3){0.0f, 0.55f, 0.0f}, scale,
             palette.basic);
+}
+
+void Manipulator::ForearmMoveZ() {
+  model["forearm"].transform =
+      MatrixRotateZ(DEG2RAD * capability["forearm"]["z"][BASE]);
+}
+
+float *Manipulator::GetPtrCapabilityValue(const char *type, const char *param,
+                                          Capability value) {
+  return &capability[type][param][value];
 }
 
 void Manipulator::Finish() {

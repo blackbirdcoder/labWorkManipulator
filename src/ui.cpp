@@ -12,3 +12,8 @@ void GUI::StateSwitchButton(float btnPosX, bool *statePtr, const char *title) {
     *statePtr = !*statePtr;
   }
 }
+
+void GUI::ControlRange(const char* title, float *valuePtr, float minValue, float maxValue) {
+  GuiSliderBar((Rectangle){70, 20, 100, 20}, title,
+               TextFormat("%.2f", *valuePtr), valuePtr, minValue, maxValue);
+}
