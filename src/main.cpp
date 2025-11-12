@@ -22,8 +22,9 @@ int main(void) {
     BeginDrawing();
     ClearBackground(palette.background);
     BeginMode3D(preCamera.Get());
-    manipulator.Exploitation();
+    manipulator.StaticStart();
     manipulator.ForearmMove();
+    manipulator.ArmMove();
     DrawGrid(10, 0.5f);
     EndMode3D();
     //---GUI
@@ -46,6 +47,12 @@ int main(void) {
         manipulator.GetPtrCapabilityValue("forearm", "x", manipulator.BASE),
         *manipulator.GetPtrCapabilityValue("forearm", "x", manipulator.MIN),
         *manipulator.GetPtrCapabilityValue("forearm", "x", manipulator.MAX));
+
+    gui.ControlRange(
+        95.0f, "Arm X:",
+        manipulator.GetPtrCapabilityValue("arm", "x", manipulator.BASE),
+        *manipulator.GetPtrCapabilityValue("arm", "x", manipulator.MIN),
+        *manipulator.GetPtrCapabilityValue("arm", "x", manipulator.MAX));
     //---
     EndDrawing();
     //---

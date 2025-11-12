@@ -7,9 +7,10 @@ class Manipulator {
 public:
   Manipulator();
   enum Capability { BASE, MIN, MAX };
-  void Exploitation();
+  void StaticStart();
   void Finish();
   void ForearmMove();
+  void ArmMove();
   float *GetPtrCapabilityValue(const char *, const char *, Capability);
 
 private:
