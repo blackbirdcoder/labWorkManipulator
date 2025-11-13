@@ -1,6 +1,7 @@
 #include "manipulator.h"
 #include "settings.h"
 #include <raylib.h>
+#include <raymath.h>
 #include <rlgl.h>
 
 Manipulator::Manipulator() {
@@ -35,8 +36,7 @@ void Manipulator::ForearmMove() {
   rlRotatef(z, 0.0f, 0.0f, 1.0f);
   rlRotatef(x, 1.0f, 0.0f, 0.0f);
   rlTranslatef(0.0f, 0.55f, 0.0f);
-  DrawModel(model["forearm"], (Vector3){0.0f, 0.0f, 0.0f}, scale,
-            palette.basic);
+  DrawModel(model["forearm"], Vector3Zero(), scale, palette.basic);
   rlPopMatrix();
 }
 
@@ -49,8 +49,8 @@ void Manipulator::ArmMove() {
   rlRotatef(y, 0.0f, 1.0f, 0.0f);
   rlRotatef(z, 0.0f, 0.0f, 1.0f);
   rlTranslatef(0.5f, 0.55f, 0.0f);
-  rlScalef(lenX, 1.0f, 1.0f);
-  DrawModel(model["arm"], (Vector3){0.0f, 0.0f, 0.0f}, scale, palette.chunk);
+  rlScalef(lenX, scale, scale);
+  DrawModel(model["arm"], Vector3Zero(), scale, palette.chunk);
   rlPopMatrix();
 }
 
