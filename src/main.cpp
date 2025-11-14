@@ -26,6 +26,7 @@ int main(void) {
     manipulator.ForearmMove();
     manipulator.ArmMove();
     manipulator.WristMove();
+    manipulator.EffectorMove();
     DrawGrid(10, 0.5f);
     EndMode3D();
     //---GUI

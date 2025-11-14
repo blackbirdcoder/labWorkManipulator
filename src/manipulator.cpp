@@ -14,6 +14,7 @@ Manipulator::Manipulator() {
   model["forearm"] = LoadModelFromMesh(GenMeshCube(1.0f, 0.3f, 0.35f));
   model["arm"] = LoadModelFromMesh(GenMeshCube(1.0f, 0.2f, 0.2f));
   model["wrist"] = LoadModelFromMesh(GenMeshCube(0.2f, 0.1f, 0.1f));
+  model["effector"] = LoadModelFromMesh(GenMeshTorus(0.3f, 0.2f, 12, 12));
 
   capability["forearm"]["z"] = {0.0f, -15.0f, 15.0f};
   capability["forearm"]["y"] = {0.0f, 0.0f, 180.0f};
@@ -70,6 +71,22 @@ void Manipulator::WristMove() {
   rlRotatef(x, 1.0f, 0.0f, 0.0f);
   rlTranslatef(posX, 0.55f, 0.0f);
   DrawModel(model["wrist"], Vector3Zero(), scale, palette.covert);
+  rlPopMatrix();
+}
+
+void Manipulator::EffectorMove() {
+  float increase = 0.7f;
+  float posX = capability["arm"]["x"][BASE] + increase;
+  float z = capability["forearm"]["z"][BASE];
+  float y = capability["forearm"]["y"][BASE];
+  float x = capability["forearm"]["x"][BASE];
+
+  rlPushMatrix();
+  rlRotatef(y, 0.0f, 1.0f, 0.0f);
+  rlRotatef(z, 0.0f, 0.0f, 1.0f);
+  rlRotatef(x, 1.0f, 0.0f, 0.0f);
+  rlTranslatef(posX, 0.55f, 0.0f);
+  DrawModel(model["effector"], Vector3Zero(), scale, palette.covert);
   rlPopMatrix();
 }
 
