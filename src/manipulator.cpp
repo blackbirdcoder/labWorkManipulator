@@ -44,10 +44,12 @@ void Manipulator::ArmMove() {
   float lenX = capability["arm"]["x"][BASE];
   float z = capability["forearm"]["z"][BASE];
   float y = capability["forearm"]["y"][BASE];
+  float x = capability["forearm"]["x"][BASE];
 
   rlPushMatrix();
   rlRotatef(y, 0.0f, 1.0f, 0.0f);
   rlRotatef(z, 0.0f, 0.0f, 1.0f);
+  rlRotatef(x, 1.0f, 0.0f, 0.0f);
   rlTranslatef(0.5f, 0.55f, 0.0f);
   rlScalef(lenX, scale, scale);
   DrawModel(model["arm"], Vector3Zero(), scale, palette.chunk);
