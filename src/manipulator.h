@@ -11,6 +11,7 @@ public:
   void Finish();
   void ForearmMove();
   void ArmMove();
+  void WristMove();
   float *GetPtrCapabilityValue(const char *, const char *, Capability);
 
 private:

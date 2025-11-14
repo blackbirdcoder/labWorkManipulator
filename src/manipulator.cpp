@@ -1,5 +1,6 @@
 #include "manipulator.h"
 #include "settings.h"
+#include <iostream>
 #include <raylib.h>
 #include <raymath.h>
 #include <rlgl.h>
@@ -11,12 +12,13 @@ Manipulator::Manipulator() {
   model["sleeve"] = LoadModelFromMesh(GenMeshCylinder(0.3f, 0.2f, 12));
   model["joint"] = LoadModelFromMesh(GenMeshSphere(0.25f, 12, 12));
   model["forearm"] = LoadModelFromMesh(GenMeshCube(1.0f, 0.3f, 0.35f));
-  model["arm"] = LoadModelFromMesh(GenMeshCube(0.1f, 0.2f, 0.2f));
+  model["arm"] = LoadModelFromMesh(GenMeshCube(1.0f, 0.2f, 0.2f));
+  model["wrist"] = LoadModelFromMesh(GenMeshCube(0.2f, 0.1f, 0.1f));
 
   capability["forearm"]["z"] = {0.0f, -15.0f, 15.0f};
   capability["forearm"]["y"] = {0.0f, 0.0f, 180.0f};
   capability["forearm"]["x"] = {0.0f, -5.0f, 5.0f};
-  capability["arm"]["x"] = {0.5f, 0.5f, 10.0f};
+  capability["arm"]["x"] = {0.1f, 0.1f, 0.5f};
 }
 
 void Manipulator::StaticStart() {
@@ -41,7 +43,7 @@ void Manipulator::ForearmMove() {
 }
 
 void Manipulator::ArmMove() {
-  float lenX = capability["arm"]["x"][BASE];
+  float posX = capability["arm"]["x"][BASE];
   float z = capability["forearm"]["z"][BASE];
   float y = capability["forearm"]["y"][BASE];
   float x = capability["forearm"]["x"][BASE];
@@ -50,9 +52,24 @@ void Manipulator::ArmMove() {
   rlRotatef(y, 0.0f, 1.0f, 0.0f);
   rlRotatef(z, 0.0f, 0.0f, 1.0f);
   rlRotatef(x, 1.0f, 0.0f, 0.0f);
-  rlTranslatef(0.5f, 0.55f, 0.0f);
-  rlScalef(lenX, scale, scale);
+  rlTranslatef(posX, 0.55f, 0.0f);
   DrawModel(model["arm"], Vector3Zero(), scale, palette.chunk);
+  rlPopMatrix();
+}
+
+void Manipulator::WristMove() {
+  float increase = 0.5f;
+  float posX = capability["arm"]["x"][BASE] + increase;
+  float z = capability["forearm"]["z"][BASE];
+  float y = capability["forearm"]["y"][BASE];
+  float x = capability["forearm"]["x"][BASE];
+
+  rlPushMatrix();
+  rlRotatef(y, 0.0f, 1.0f, 0.0f);
+  rlRotatef(z, 0.0f, 0.0f, 1.0f);
+  rlRotatef(x, 1.0f, 0.0f, 0.0f);
+  rlTranslatef(posX, 0.55f, 0.0f);
+  DrawModel(model["wrist"], Vector3Zero(), scale, palette.covert);
   rlPopMatrix();
 }
 
