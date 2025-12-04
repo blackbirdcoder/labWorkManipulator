@@ -16,6 +16,9 @@ public:
   float *GetPtrCapabilityValue(const char *, const char *, Capability);
 
 private:
+  Texture2D textureSwatch1;
+  Texture2D textureSwatch2;
+  Texture2D textureSwatch3;  
   std::map<const char *, Model> model;
   std::map<const char *, std::map<const char *, std::vector<float>>> capability;
   float scale;

@@ -16,6 +16,24 @@ Manipulator::Manipulator() {
   model["wrist"] = LoadModelFromMesh(GenMeshCube(0.2f, 0.1f, 0.1f));
   model["effector"] = LoadModelFromMesh(GenMeshTorus(0.3f, 0.2f, 12, 12));
 
+  textureSwatch1 = LoadTexture("texture/rustyB.jpg");
+  textureSwatch2 = LoadTexture("texture/rustyC.jpg");
+  textureSwatch3 = LoadTexture("texture/rustyA.jpg");
+
+  model["basis"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
+      textureSwatch1;
+  model["sleeve"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
+      textureSwatch1;
+  model["forearm"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
+      textureSwatch1;
+  model["arm"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = textureSwatch3;
+  model["wrist"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
+      textureSwatch2;
+  model["effector"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
+      textureSwatch2;
+  model["joint"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
+      textureSwatch2;
+
   capability["forearm"]["z"] = {0.0f, -15.0f, 15.0f};
   capability["forearm"]["y"] = {0.0f, 0.0f, 180.0f};
   capability["forearm"]["x"] = {0.0f, -5.0f, 5.0f};
@@ -23,10 +41,9 @@ Manipulator::Manipulator() {
 }
 
 void Manipulator::StaticStart() {
-  DrawModel(model["basis"], (Vector3){0.0f, 0.0f, 0.0f}, scale, palette.basic);
-  DrawModel(model["sleeve"], (Vector3){0.0f, 0.1f, 0.0f}, scale,
-            palette.covert);
-  DrawModel(model["joint"], (Vector3){0.0f, 0.3f, 0.0f}, scale, palette.chunk);
+  DrawModel(model["basis"], (Vector3){0.0f, 0.0f, 0.0f}, scale, WHITE);
+  DrawModel(model["sleeve"], (Vector3){0.0f, 0.1f, 0.0f}, scale, WHITE);
+  DrawModel(model["joint"], (Vector3){0.0f, 0.3f, 0.0f}, scale, WHITE);
 }
 
 void Manipulator::ForearmMove() {
@@ -39,7 +56,7 @@ void Manipulator::ForearmMove() {
   rlRotatef(z, 0.0f, 0.0f, 1.0f);
   rlRotatef(x, 1.0f, 0.0f, 0.0f);
   rlTranslatef(0.0f, 0.55f, 0.0f);
-  DrawModel(model["forearm"], Vector3Zero(), scale, palette.basic);
+  DrawModel(model["forearm"], Vector3Zero(), scale, WHITE);
   rlPopMatrix();
 }
 
@@ -54,7 +71,7 @@ void Manipulator::ArmMove() {
   rlRotatef(z, 0.0f, 0.0f, 1.0f);
   rlRotatef(x, 1.0f, 0.0f, 0.0f);
   rlTranslatef(posX, 0.55f, 0.0f);
-  DrawModel(model["arm"], Vector3Zero(), scale, palette.chunk);
+  DrawModel(model["arm"], Vector3Zero(), scale, WHITE);
   rlPopMatrix();
 }
 
@@ -70,7 +87,7 @@ void Manipulator::WristMove() {
   rlRotatef(z, 0.0f, 0.0f, 1.0f);
   rlRotatef(x, 1.0f, 0.0f, 0.0f);
   rlTranslatef(posX, 0.55f, 0.0f);
-  DrawModel(model["wrist"], Vector3Zero(), scale, palette.covert);
+  DrawModel(model["wrist"], Vector3Zero(), scale, WHITE);
   rlPopMatrix();
 }
 
@@ -86,7 +103,7 @@ void Manipulator::EffectorMove() {
   rlRotatef(z, 0.0f, 0.0f, 1.0f);
   rlRotatef(x, 1.0f, 0.0f, 0.0f);
   rlTranslatef(posX, 0.55f, 0.0f);
-  DrawModel(model["effector"], Vector3Zero(), scale, palette.covert);
+  DrawModel(model["effector"], Vector3Zero(), scale, WHITE);
   rlPopMatrix();
 }
 
