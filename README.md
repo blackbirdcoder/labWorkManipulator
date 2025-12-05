@@ -1,6 +1,6 @@
 # Robot manipulator 🦾
 
-![Demo](demo/move.gif)
+![Demo](demo/pic.png)
 
 This project is a simple example of a robotic manipulator implemented using the raylib library.
 It was created as a basic assignment for my variant.
