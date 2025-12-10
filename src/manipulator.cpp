@@ -16,23 +16,24 @@ Manipulator::Manipulator() {
   model["wrist"] = LoadModelFromMesh(GenMeshCube(0.2f, 0.1f, 0.1f));
   model["effector"] = LoadModelFromMesh(GenMeshTorus(0.3f, 0.2f, 12, 12));
 
-  textureSwatch1 = LoadTexture("texture/rustyB.jpg");
-  textureSwatch2 = LoadTexture("texture/rustyC.jpg");
-  textureSwatch3 = LoadTexture("texture/rustyA.jpg");
+  textureSwatch["one"] = LoadTexture("texture/rustyB.jpg");
+  textureSwatch["two"] = LoadTexture("texture/rustyC.jpg");
+  textureSwatch["three"] = LoadTexture("texture/rustyA.jpg");
 
   model["basis"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
-      textureSwatch1;
+      textureSwatch["one"];
   model["sleeve"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
-      textureSwatch1;
+      textureSwatch["one"];
   model["forearm"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
-      textureSwatch1;
-  model["arm"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = textureSwatch3;
+      textureSwatch["one"];
+  model["arm"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
+      textureSwatch["three"];
   model["wrist"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
-      textureSwatch2;
+      textureSwatch["two"];
   model["effector"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
-      textureSwatch2;
+      textureSwatch["two"];
   model["joint"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
-      textureSwatch2;
+      textureSwatch["two"];
 
   capability["forearm"]["z"] = {0.0f, -15.0f, 15.0f};
   capability["forearm"]["y"] = {0.0f, 0.0f, 180.0f};
@@ -115,5 +116,9 @@ float *Manipulator::GetPtrCapabilityValue(const char *type, const char *param,
 void Manipulator::Finish() {
   for (const auto pair : model) {
     UnloadModel(pair.second);
+  }
+
+  for (const auto pair : textureSwatch) {
+    UnloadTexture(pair.second);
   }
 }
