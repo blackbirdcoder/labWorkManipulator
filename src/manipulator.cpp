@@ -5,7 +5,8 @@
 #include <raymath.h>
 #include <rlgl.h>
 
-Manipulator::Manipulator() {
+Manipulator::Manipulator(Shader *shader) {
+  this->shader = shader;
   scale = 1.0f;
 
   model["basis"] = LoadModelFromMesh(GenMeshCube(1.0f, 0.3f, 1.0f));
@@ -34,6 +35,10 @@ Manipulator::Manipulator() {
       textureSwatch["two"];
   model["joint"].materials[0].maps[MATERIAL_MAP_DIFFUSE].texture =
       textureSwatch["two"];
+
+  for (const auto pair : model) {
+    pair.second.materials[0].shader = *this->shader;
+  }
 
   capability["forearm"]["z"] = {0.0f, -15.0f, 15.0f};
   capability["forearm"]["y"] = {0.0f, 0.0f, 180.0f};

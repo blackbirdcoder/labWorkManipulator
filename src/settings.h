@@ -12,6 +12,7 @@ struct Palette {
   Color chunk;
   Color ui;
   Color covert;
+  Color spotlight;
 };
 
 extern const Palette palette;

@@ -4,30 +4,41 @@
 #include <raylib.h>
 #include "camera.h"
 #include "ui.h"
+#define RLIGHTS_IMPLEMENTATION
+#include "lighting.h"
+#include <rlgl.h>
+#include <iostream>
 // clang-format on
 
 int main(void) {
   InitWindow(W_WIDTH, W_HEIGHT, TITLE);
   SetTargetFPS(FPS);
   PresentationCamera preCamera = PresentationCamera();
-  Manipulator manipulator = Manipulator();
+  Lighting lighting = Lighting("shaders/lighting.vs", "shaders/lighting.fs");
+  lighting.CreateAmbient();
+  const char *spotlight = "spotlight";
+  lighting.Point(spotlight, (Vector3){1.70f, 2.90f, 3.90f}, palette.spotlight);
+  Manipulator manipulator = Manipulator(lighting.GetShader());
   GUI gui = GUI();
 
   while (!WindowShouldClose()) {
     //--- Update
     preCamera.Run();
+    lighting.Update();
     //---
 
     //--- Draw
     BeginDrawing();
     ClearBackground(palette.background);
     BeginMode3D(preCamera.Get());
+    BeginShaderMode(*lighting.GetShader());
     manipulator.StaticStart();
     manipulator.ForearmMove();
     manipulator.ArmMove();
     manipulator.WristMove();
     manipulator.EffectorMove();
     DrawGrid(10, 0.5f);
+    EndShaderMode();
     EndMode3D();
     //---GUI
     gui.StateSwitchButton(((float)GetScreenWidth() - 130), &preCamera.state,
@@ -61,6 +72,7 @@ int main(void) {
   }
 
   manipulator.Finish();
+  lighting.Unload();
   CloseWindow();
   return 0;
 }

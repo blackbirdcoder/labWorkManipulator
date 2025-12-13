@@ -5,7 +5,7 @@
 
 class Manipulator {
 public:
-  Manipulator();
+  Manipulator(Shader*);
   enum Capability { BASE, MIN, MAX };
   void StaticStart();
   void Finish();
@@ -20,4 +20,5 @@ private:
   std::map<const char *, Model> model;
   std::map<const char *, std::map<const char *, std::vector<float>>> capability;
   float scale;
+  Shader *shader;
 };
